@@ -1,26 +1,67 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* 設計代幣：深色金融風格，金色作為點綴，紅漲綠跌（台股慣例） */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: #090b0f;
+  --color-surface: #10131a;
+  --color-surface-2: #161a23;
+  --color-line: #222736;
+  --color-fg: #e8eaf0;
+  --color-muted: #8b93a7;
+  --color-faint: #5a6275;
+  --color-accent: #d4b676;
+  --color-up: #ff6b6b;
+  --color-down: #34d399;
+  --font-sans: var(--font-geist-sans), var(--font-noto-sans-tc), system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  color-scheme: dark;
+}
+
+html {
+  background: var(--color-bg);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  /* 頂部一抹淡金色光暈，營造層次 */
+  background:
+    radial-gradient(900px 420px at 50% -120px, rgba(212, 182, 118, 0.1), transparent 70%),
+    var(--color-bg);
+  font-variant-numeric: tabular-nums;
+}
+
+::selection {
+  background: rgba(212, 182, 118, 0.3);
+}
+
+/* 細緻的捲軸 */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #2a3042 transparent;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-up {
+  animation: fade-up 0.45s ease-out both;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+.live-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up, .live-dot { animation: none; }
 }
